@@ -12,7 +12,6 @@ st.title("Heart Disease Classification - ML Deployment")
 # -----------------------------
 # Load saved artifacts
 # -----------------------------
-scaler = joblib.load("models/scaler.pkl")
 label_encoders = joblib.load("models/label_encoders.pkl")
 
 # Preprocessors saved for linear models
@@ -33,6 +32,7 @@ model_name = st.selectbox(
     ["Logistic Regression", "Decision Tree", "KNN",
      "Naive Bayes", "Random Forest", "XGBoost"]
 )
+scaler = joblib.load(f"models/{model_name.lower().replace(' ', '_')}_scaler.pkl")
 
 model_paths = {
     "Logistic Regression": "models/logistic_regression.pkl",
@@ -54,6 +54,7 @@ uploaded_file = st.file_uploader(
 # -----------------------------
 # Prediction
 # -----------------------------
+uploaded_file = "ml-assignment-2/heart_disease_uci.csv"
 if uploaded_file is not None:
     data = pd.read_csv(uploaded_file)
 
@@ -82,7 +83,7 @@ if uploaded_file is not None:
 
     else:
         # Tree models: imputation + label encoding
-        # 1️⃣ Fill missing values
+        #  Fill missing values
         if tree_preprocessor is not None:
             X_test_processed = tree_preprocessor.transform(X_test)
         else:
@@ -99,7 +100,7 @@ if uploaded_file is not None:
             X_test[cat_cols] = cat_imputer.fit_transform(X_test[cat_cols])
             X_test_processed = X_test.values
 
-        # 2️⃣ Apply label encoders
+        #  Apply label encoders
         for col, le in label_encoders.items():
             if col in X_test.columns:
                 X_test_processed[:, X_test.columns.get_loc(col)] = le.transform(X_test[col])
