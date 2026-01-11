@@ -54,7 +54,6 @@ uploaded_file = st.file_uploader(
 # -----------------------------
 # Prediction
 # -----------------------------
-uploaded_file = "ml-assignment-2/heart_disease_uci.csv"
 if uploaded_file is not None:
     data = pd.read_csv(uploaded_file)
 
