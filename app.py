@@ -55,6 +55,7 @@ uploaded_file = st.file_uploader(
 # Prediction
 # -----------------------------
 if uploaded_file is not None:
+    uploaded_file.seek(0)
     data = pd.read_csv(uploaded_file)
     # Drop unused columns
     data = data.drop(columns=["id", "dataset"], errors="ignore")
