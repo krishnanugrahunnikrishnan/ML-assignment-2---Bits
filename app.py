@@ -55,13 +55,11 @@ model_paths = {
 # Prediction
 # -----------------------------
 if uploaded_file is not None:
-    st.write("Accuracy:",uploaded_file)
-    
     uploaded_file.seek(0)
     data = pd.read_csv(uploaded_file)
     # Drop unused columns
     data = data.drop(columns=["id", "dataset"], errors="ignore")
-    data = pd.read_csv(uploaded_file)
+
     for col in label_encoders.keys():
         le =label_encoders[col]
         data[col] = data[col].astype(str)  # ensure string type
