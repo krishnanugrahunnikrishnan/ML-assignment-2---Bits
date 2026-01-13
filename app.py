@@ -59,6 +59,12 @@ if uploaded_file is not None:
 
     # Drop unused columns
     data = data.drop(columns=["id", "dataset"], errors="ignore")
+    data = pd.read_csv(uploaded_file)
+    for col in label_encoders.keys():
+        le =label_encoders[col]
+        data[col] = data[col].astype(str)  # ensure string type
+        data[col] = le.fit_transform(data[col])
+        label_encoders[col] = le
 
     # Separate target
     y_test = data["num"]
@@ -73,46 +79,18 @@ if uploaded_file is not None:
     if model_name in linear_models:
         # Use saved linear preprocessor (imputation + one-hot)
         preprocessor = linear_preprocessors[model_name]
-
         # Transform features
         X_test_processed = preprocessor.transform(X_test)
-
         # Scale features
         X_test_processed = scaler.transform(X_test_processed)
 
     else:
-        # Tree models: imputation + label encoding
-        #  Fill missing values
-        if tree_preprocessor is not None:
-            X_test_processed = tree_preprocessor.transform(X_test)
-        else:
-            # fallback: simple imputation
-            num_cols = X_test.select_dtypes(include=['int64', 'float64']).columns
-            cat_cols = X_test.select_dtypes(include=['object']).columns
+        X_test_processed = tree_preprocessor.transform(X_test)
 
-            num_imputer = SimpleImputer(strategy='mean')
-            cat_imputer = SimpleImputer(strategy='most_frequent')
 
-            # Impute numerical
-            X_test[num_cols] = num_imputer.fit_transform(X_test[num_cols])
-            # Impute categorical
-            X_test[cat_cols] = cat_imputer.fit_transform(X_test[cat_cols])
-            X_test_processed = X_test.values
-
-        #  Apply label encoders
-        for col, le in label_encoders.items():
-            if col in X_test.columns:
-                X_test_processed[:, X_test.columns.get_loc(col)] = le.transform(X_test[col])
-
-    # -----------------------------
-    # Load model
-    # -----------------------------
     model = joblib.load(model_paths[model_name])
-
-    # Predict
     y_pred = model.predict(X_test_processed)
 
-    # Some models have predict_proba
     try:
         y_prob = model.predict_proba(X_test_processed)[:, 1]
     except:
