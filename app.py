@@ -57,7 +57,7 @@ if uploaded_file is not None:
     uploaded_file.seek(0)
     data = pd.read_csv(uploaded_file)
     # Drop unused columns
-    data = data.drop(columns=["id", "dataset"], errors="ignore")
+    
 
     for col in label_encoders.keys():
         le =label_encoders[col]
@@ -65,6 +65,7 @@ if uploaded_file is not None:
         data[col] = le.transform(data[col])
         label_encoders[col] = le
 
+    data = data.drop(columns=["id", "dataset"], errors="ignore")
     # Separate target
     y_test = data["num"]
     X_test = data.drop("num", axis=1)
