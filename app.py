@@ -56,7 +56,7 @@ uploaded_file = st.file_uploader(
 # -----------------------------
 if uploaded_file is not None:
     st.write("Accuracy:",uploaded_file)
-    break
+    
     uploaded_file.seek(0)
     data = pd.read_csv(uploaded_file)
     # Drop unused columns
