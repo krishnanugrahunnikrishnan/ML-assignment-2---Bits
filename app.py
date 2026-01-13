@@ -38,7 +38,6 @@ model_name = st.selectbox(
     ["Logistic Regression", "Decision Tree", "KNN",
      "Naive Bayes", "Random Forest", "XGBoost"]
 )
-scaler = joblib.load(f"models/{model_name.lower().replace(' ', '_')}_scaler.pkl")
 
 model_paths = {
     "Logistic Regression": "models/logistic_regression.pkl",
@@ -63,7 +62,7 @@ if uploaded_file is not None:
     for col in label_encoders.keys():
         le =label_encoders[col]
         data[col] = data[col].astype(str)  # ensure string type
-        data[col] = le.fit_transform(data[col])
+        data[col] = le.transform(data[col])
         label_encoders[col] = le
 
     # Separate target
@@ -82,6 +81,7 @@ if uploaded_file is not None:
         # Transform features
         X_test_processed = preprocessor.transform(X_test)
         # Scale features
+        scaler = joblib.load(f"models/{model_name.lower().replace(' ', '_')}_scaler.pkl")
         X_test_processed = scaler.transform(X_test_processed)
 
     else:
