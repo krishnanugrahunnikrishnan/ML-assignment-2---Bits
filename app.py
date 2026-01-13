@@ -8,7 +8,13 @@ from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 
 st.title("Heart Disease Classification - ML Deployment")
-
+# -----------------------------
+# Upload CSV
+# -----------------------------
+uploaded_file = st.file_uploader(
+    "Upload Test Dataset (CSV - same format as training data)",
+    type=["csv"]
+)
 # -----------------------------
 # Load saved artifacts
 # -----------------------------
@@ -43,13 +49,7 @@ model_paths = {
     "XGBoost": "models/xgboost.pkl"
 }
 
-# -----------------------------
-# Upload CSV
-# -----------------------------
-uploaded_file = st.file_uploader(
-    "Upload Test Dataset (CSV - same format as training data)",
-    type=["csv"]
-)
+
 
 # -----------------------------
 # Prediction
