@@ -57,7 +57,7 @@ if uploaded_file is not None:
     uploaded_file.seek(0)
     data = pd.read_csv(uploaded_file)
     # Drop unused columns
-    st.write(model_name)
+    st.write("Selected_model " , model_name)
     
 
     for col in label_encoders.keys():
@@ -78,6 +78,7 @@ if uploaded_file is not None:
     tree_models = ["Decision Tree", "Random Forest", "XGBoost"]
 
     if model_name in linear_models:
+        st.write("Linear.....")
         # Use saved linear preprocessor (imputation + one-hot)
         preprocessor = linear_preprocessors[model_name]
         # Transform features
@@ -87,6 +88,7 @@ if uploaded_file is not None:
         X_test_processed = scaler.transform(X_test_processed)
 
     else:
+        st.write("Non linear")
         X_test_processed = tree_preprocessor.transform(X_test)
 
 
