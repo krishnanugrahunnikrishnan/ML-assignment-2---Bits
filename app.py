@@ -86,7 +86,6 @@ if uploaded_file is not None:
         X_test_processed = scaler.transform(X_test_processed)
 
     else:
-        st.write("Non linear")
         X_test_processed = preprocessor.transform(X_test)
 
 
