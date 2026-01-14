@@ -78,7 +78,6 @@ if uploaded_file is not None:
     tree_models = ["Decision Tree", "Random Forest", "XGBoost"]
     preprocessor = model_preprocessors[model_name]
     if model_name in linear_models:
-        st.write("Linear.....")
         # Use saved linear preprocessor (imputation + one-hot)
         # Transform features
         X_test_processed = preprocessor.transform(X_test)
@@ -102,7 +101,7 @@ if uploaded_file is not None:
     # -----------------------------
     # Display results
     # -----------------------------
-    st.subheader(model_name,"   Evaluation Metrics")
+    st.subheader(f"{model_name} — Evaluation Metrics")
     st.write("Accuracy:", accuracy_score(y_test, y_pred))
     st.text("Classification Report:")
     st.text(classification_report(y_test, y_pred))
