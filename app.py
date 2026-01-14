@@ -59,6 +59,7 @@ model_paths = {
 if uploaded_file is not None:
     uploaded_file.seek(0)
     data = pd.read_csv(uploaded_file)
+    data["num"] = data["num"].apply(lambda x: 0 if x == 0 else 1)
     # Drop unused columns
 
     for col in label_encoders.keys():
