@@ -21,10 +21,13 @@ uploaded_file = st.file_uploader(
 label_encoders = joblib.load("models/label_encoders.pkl")
 
 # Preprocessors saved for linear models
-linear_preprocessors = {
+model_preprocessors = {
     "Logistic Regression": joblib.load("models/logistic_regression_preprocessor.pkl"),
     "KNN": joblib.load("models/knn_preprocessor.pkl"),
-    "Naive Bayes": joblib.load("models/naive_bayes_preprocessor.pkl")
+    "Naive Bayes": joblib.load("models/naive_bayes_preprocessor.pkl"),
+    "Decision Tree":joblib.load("models/decision_tree_preprocessor.pkl"),
+    "XGBoost":joblib.load("models/xgboost_preprocessor.pkl"),
+    "Random Forest":joblib.load("models/random_forest_preprocessor.pkl")
 }
 
 # Tree models preprocessor (optional if you saved it)
@@ -64,7 +67,6 @@ if uploaded_file is not None:
         le =label_encoders[col]
         data[col] = data[col].astype(str)  # ensure string type
         data[col] = le.transform(data[col])
-        label_encoders[col] = le
 
     data = data.drop(columns=["id", "dataset"], errors="ignore")
     # Separate target
@@ -76,11 +78,10 @@ if uploaded_file is not None:
     # -----------------------------
     linear_models = ["Logistic Regression", "KNN", "Naive Bayes"]
     tree_models = ["Decision Tree", "Random Forest", "XGBoost"]
-
+    preprocessor = model_preprocessors[model_name]
     if model_name in linear_models:
         st.write("Linear.....")
         # Use saved linear preprocessor (imputation + one-hot)
-        preprocessor = linear_preprocessors[model_name]
         # Transform features
         X_test_processed = preprocessor.transform(X_test)
         # Scale features
@@ -89,7 +90,7 @@ if uploaded_file is not None:
 
     else:
         st.write("Non linear")
-        X_test_processed = tree_preprocessor.transform(X_test)
+        X_test_processed = preprocessor.transform(X_test)
 
 
     model = joblib.load(model_paths[model_name])
