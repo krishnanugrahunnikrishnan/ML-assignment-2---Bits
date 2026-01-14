@@ -20,7 +20,7 @@ uploaded_file = st.file_uploader(
 # -----------------------------
 label_encoders = joblib.load("models/label_encoders.pkl")
 
-# Preprocessors saved for linear models
+# Preprocessors saved for models
 model_preprocessors = {
     "Logistic Regression": joblib.load("models/logistic_regression_preprocessor.pkl"),
     "KNN": joblib.load("models/knn_preprocessor.pkl"),
@@ -30,8 +30,6 @@ model_preprocessors = {
     "Random Forest":joblib.load("models/random_forest_preprocessor.pkl")
 }
 
-# Tree models preprocessor (optional if you saved it)
-tree_preprocessor = joblib.load("models/tree_preprocessor.pkl") if "models/tree_preprocessor.pkl" in joblib.os.listdir("models") else None
 
 # -----------------------------
 # Model selection
