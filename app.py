@@ -60,8 +60,6 @@ if uploaded_file is not None:
     uploaded_file.seek(0)
     data = pd.read_csv(uploaded_file)
     # Drop unused columns
-    st.write("Selected_model " , model_name)
-    
 
     for col in label_encoders.keys():
         le =label_encoders[col]
@@ -104,7 +102,7 @@ if uploaded_file is not None:
     # -----------------------------
     # Display results
     # -----------------------------
-    st.subheader("Evaluation Metrics")
+    st.subheader(model_name,"   Evaluation Metrics")
     st.write("Accuracy:", accuracy_score(y_test, y_pred))
     st.text("Classification Report:")
     st.text(classification_report(y_test, y_pred))
