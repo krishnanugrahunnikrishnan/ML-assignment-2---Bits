@@ -57,6 +57,7 @@ if uploaded_file is not None:
     uploaded_file.seek(0)
     data = pd.read_csv(uploaded_file)
     # Drop unused columns
+    st.write(model_name)
     
 
     for col in label_encoders.keys():
