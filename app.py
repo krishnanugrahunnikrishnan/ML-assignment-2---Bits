@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import joblib
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+from sklearn.metrics import roc_auc_score, precision_score, recall_score, f1_score, matthews_corrcoef
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.impute import SimpleImputer
 from sklearn.compose import ColumnTransformer
@@ -101,6 +102,11 @@ if uploaded_file is not None:
     # -----------------------------
     st.subheader(f"{model_name} — Evaluation Metrics")
     st.write("Accuracy:", accuracy_score(y_test, y_pred))
+    st.write("AUC": roc_auc_score(y_test, y_prob))
+    st.write("Precision": precision_score(y_test, y_pred))
+    st.write("Recall": recall_score(y_test, y_pred))
+    st.write("F1": f1_score(y_test, y_pred))
+    st.write("MCC ":,matthews_corrcoef(y_test, y_pred))
     st.text("Classification Report:")
     st.text(classification_report(y_test, y_pred))
 
