@@ -102,11 +102,11 @@ if uploaded_file is not None:
     # -----------------------------
     st.subheader(f"{model_name} — Evaluation Metrics")
     st.write("Accuracy:", accuracy_score(y_test, y_pred))
-    st.write("AUC": roc_auc_score(y_test, y_prob))
-    st.write("Precision": precision_score(y_test, y_pred))
-    st.write("Recall": recall_score(y_test, y_pred))
-    st.write("F1": f1_score(y_test, y_pred))
-    st.write("MCC ":,matthews_corrcoef(y_test, y_pred))
+    st.write("AUC : ", roc_auc_score(y_test, y_prob))
+    st.write("Precision : ", precision_score(y_test, y_pred))
+    st.write("Recall :", recall_score(y_test, y_pred))
+    st.write("F1 :", f1_score(y_test, y_pred))
+    st.write("MCC :",matthews_corrcoef(y_test, y_pred))
     st.text("Classification Report:")
     st.text(classification_report(y_test, y_pred))
 
