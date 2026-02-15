@@ -3,6 +3,8 @@
 Implementation and deployment of six machine learning classification models with evaluation using Streamlit.
 use Logestic regression, Deciosion Tree, KNN, Naive Bayes, Random forest, XGB for a selected binary calssification problem, using a selected datset.
 
+For this experiment the above algoritames are used to detect the Heart disease, gievn the patient related data/features. 
+
 # Dataset description 
 Dataset : UCI Heart Disease Data
 
